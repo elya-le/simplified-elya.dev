@@ -1,4 +1,6 @@
 @import "../styles/typography.css";
+@import "../styles/marquee.css";
+
 
 :root {
   --bg: #ffffff;
