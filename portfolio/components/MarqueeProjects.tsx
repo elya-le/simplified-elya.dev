@@ -47,7 +47,10 @@ export default function MarqueeProjects() {
   const handleEnter = (index: number) => {
     const el = titleRefs.current[index];
     if (!el) return;
-    el.style.width = `${el.dataset.width}px`;
+
+    const base = Number(el.dataset.width || "0");
+    const buffer = 12; // prevents "(Communication Ap" clipping
+    el.style.width = `${base + buffer}px`;
   };
 
   const handleLeave = (index: number) => {
@@ -79,9 +82,7 @@ export default function MarqueeProjects() {
                         if (el) titleRefs.current[i] = el;
                       }}
                     >
-                      <span className="paren">(</span>
-                      {p.title}
-                      <span className="paren">)</span>
+                      ({p.title})
                     </span>
                   </span>
 
@@ -112,9 +113,7 @@ export default function MarqueeProjects() {
                         if (el) titleRefs.current[idx] = el;
                       }}
                     >
-                      <span className="paren">(</span>
-                      {p.title}
-                      <span className="paren">)</span>
+                      ({p.title})
                     </span>
                   </span>
 
