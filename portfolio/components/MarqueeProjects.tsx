@@ -14,7 +14,7 @@ export default function MarqueeProjects() {
     let last = performance.now();
     let x = 0;
 
-    const speed = 60; // px/sec
+    const speed = 30; // px/sec
 
     const tick = (now: number) => {
       const dt = (now - last) / 1000;
@@ -22,7 +22,6 @@ export default function MarqueeProjects() {
 
       x -= speed * dt;
 
-      // loop when we've shifted one full set width
       const w = track.scrollWidth / 2;
       if (w > 0 && x <= -w) x += w;
 
@@ -42,20 +41,32 @@ export default function MarqueeProjects() {
         <div className="marqueeTrack" ref={trackRef}>
           {/* set A */}
           <ul className="marqueeList">
-            {projects.map((p) => (
-              <li className="marqueeItem" key={`a-${p.title}`}>
-                <img className="marqueeImg" src={p.thumb} alt={p.title} />
-              </li>
-            ))}
+            {projects.map((p, i) => {
+              const label = String(i + 1).padStart(2, "0");
+              return (
+                <li className="marqueeItem" key={`a-${p.title}`}>
+                  <span className="marqueeLabel" data-title={p.title}>
+                    ({label})
+                  </span>
+                  <img className="marqueeImg" src={p.thumb} alt={p.title} />
+                </li>
+              );
+            })}
           </ul>
 
-          {/* set B (duplicate) */}
+          {/* set B */}
           <ul className="marqueeList" aria-hidden="true">
-            {projects.map((p) => (
-              <li className="marqueeItem" key={`b-${p.title}`}>
-                <img className="marqueeImg" src={p.thumb} alt={p.title} />
-              </li>
-            ))}
+            {projects.map((p, i) => {
+              const label = String(i + 1).padStart(2, "0");
+              return (
+                <li className="marqueeItem" key={`b-${p.title}`}>
+                  <span className="marqueeLabel" data-title={p.title}>
+                    ({label})
+                  </span>
+                  <img className="marqueeImg" src={p.thumb} alt={p.title} />
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
