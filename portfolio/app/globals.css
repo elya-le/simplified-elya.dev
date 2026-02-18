@@ -49,6 +49,17 @@ a {
   padding-right: var(--px-mobile);
 }
 
+
+.pageLayout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageContent {
+  flex: 1;
+}
+
 @media (min-width: 768px) {
   .container {
     padding-left: var(--px-desktop);
@@ -61,13 +72,14 @@ a {
 }
 
 .section {
-  padding-top: 56px;
-  padding-bottom: 56px;
+  border: 1px solid red;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-top: 72px;
-    padding-bottom: 72px;
+    margin: 0;
+    padding: 0;
   }
 }
