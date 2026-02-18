@@ -40,38 +40,30 @@
   flex-direction: column;
 }
 
-/* label sits above image with padding below */
 .marqueeLabel {
   padding-bottom: 12px;
   display: inline-flex;
   align-items: baseline;
 }
 
-/* number + title width-reveal swap */
-.marqueeLabelNum,
+/* number */
+.marqueeLabelNum {
+  transition: width 250ms ease, opacity 250ms ease;
+  white-space: nowrap;
+}
+
+/* title */
 .marqueeLabelTitle {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  transition: max-width 250ms ease;
+  width: 0px;
+  transition: width 250ms ease;
 }
 
-/* default: show number, hide title */
-.marqueeLabelNum {
-  max-width: 80px;
-}
-
-.marqueeLabelTitle {
-  max-width: 0px;
-}
-
-/* hover: collapse number, expand title */
-.marqueeLabel:hover .marqueeLabelNum {
-  max-width: 0px;
-}
-
-.marqueeLabel:hover .marqueeLabelTitle {
-  max-width: 480px;
+/* when title expands, fade number out */
+.marqueeItem:hover .marqueeLabelNum {
+  opacity: 0;
 }
 
 .marqueeImg {
