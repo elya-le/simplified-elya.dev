@@ -35,35 +35,43 @@
 .marqueeItem {
   flex: 0 0 auto;
   width: 480px;
-  background: rgba(0,0,0,0.04);
   margin: 0;
   display: flex;
   flex-direction: column;
 }
 
+/* label sits above image with padding below */
 .marqueeLabel {
   padding-bottom: 12px;
-  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+/* number + title width-reveal swap */
+.marqueeLabelNum,
+.marqueeLabelTitle {
   display: inline-block;
-}
-
-/* hover transform */
-.marqueeLabel::after {
-  content: attr(data-title);
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
+  overflow: hidden;
   white-space: nowrap;
+  transition: max-width 250ms ease;
 }
 
-.marqueeLabel:hover {
-  color: black;
+/* default: show number, hide title */
+.marqueeLabelNum {
+  max-width: 80px;
 }
 
-.marqueeLabel:hover::after {
-  opacity: 1;
-  color: inherit;
+.marqueeLabelTitle {
+  max-width: 0px;
+}
+
+/* hover: collapse number, expand title */
+.marqueeLabel:hover .marqueeLabelNum {
+  max-width: 0px;
+}
+
+.marqueeLabel:hover .marqueeLabelTitle {
+  max-width: 480px;
 }
 
 .marqueeImg {
