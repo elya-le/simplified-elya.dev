@@ -79,7 +79,9 @@ export default function MarqueeProjects() {
                         if (el) titleRefs.current[i] = el;
                       }}
                     >
+                      <span className="paren">(</span>
                       {p.title}
+                      <span className="paren">)</span>
                     </span>
                   </span>
 
@@ -93,7 +95,7 @@ export default function MarqueeProjects() {
           <ul className="marqueeList" aria-hidden="true">
             {projects.map((p, i) => {
               const label = String(i + 1).padStart(2, "0");
-              const idx = i + projects.length; // offset index for duplicate set
+              const idx = i + projects.length;
 
               return (
                 <li
@@ -110,7 +112,9 @@ export default function MarqueeProjects() {
                         if (el) titleRefs.current[idx] = el;
                       }}
                     >
+                      <span className="paren">(</span>
                       {p.title}
+                      <span className="paren">)</span>
                     </span>
                   </span>
 

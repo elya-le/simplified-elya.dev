@@ -42,23 +42,26 @@
 
 .marqueeLabel {
   padding-bottom: 12px;
-  display: inline-flex;
-  align-items: baseline;
+  display: inline-block;
+  position: relative;
 }
 
 /* number */
 .marqueeLabelNum {
-  transition: width 250ms ease, opacity 250ms ease;
+  transition: opacity 250ms ease;
   white-space: nowrap;
 }
 
-/* title */
+/* title: sits on top of number and expands from the SAME start point */
 .marqueeLabelTitle {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   width: 0px;
-  transition: width 250ms ease;
+  transition: width 280ms ease;
 }
 
 /* when title expands, fade number out */
