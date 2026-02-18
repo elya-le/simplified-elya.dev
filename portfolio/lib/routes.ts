@@ -1,7 +1,4 @@
 export const routes = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/studio", label: "Studio" },
-  { href: "/store", label: "Store" }, // placeholder
-  { href: "/lately", label: "Lately" },
+  { href: "/", label: "Portfolio Projects" },
+  { href: "/non-code", label: "Non-Code Related - Projects" },
 ] as const;

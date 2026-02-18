@@ -34,7 +34,7 @@
 
 .marqueeItem {
   flex: 0 0 auto;
-  width: 480px;
+  width: 560px;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -74,4 +74,110 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
+}
+
+/* clickable area */
+.marqueeButton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* OVERLAY (covers marquee but marquee stays mounted) */
+.marqueeOverlay {
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.marqueeOverlay.isOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* detail view */
+.marqueeDetail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.marqueeClose {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 12px;
+}
+
+/* desktop shows X Close */
+.marqueeCloseX {
+  display: inline-block;
+}
+
+/* mobile shows down arrow */
+.marqueeCloseDown {
+  display: none;
+}
+
+.marqueeDetailInner {
+  display: flex;
+  gap: 0;
+}
+
+.marqueeDetailMedia {
+  width: 540px;
+  flex: 0 0 auto;
+}
+
+.marqueeDetailImg {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.marqueeDetailPanel {
+  flex: 1 1 auto;
+  padding: 12px;
+}
+
+.marqueeDetailTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.marqueeDetailTable th,
+.marqueeDetailTable td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 0;
+}
+
+/* mobile: stack image then table */
+@media (max-width: 768px) {
+  .marqueeDetailInner {
+    flex-direction: column;
+  }
+
+  .marqueeDetailMedia {
+    width: 100%;
+  }
+
+  .marqueeCloseX {
+    display: none;
+  }
+
+  .marqueeCloseDown {
+    display: inline-block;
+  }
 }

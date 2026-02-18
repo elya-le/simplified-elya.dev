@@ -1,40 +1,50 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { projects } from "@/lib/projects";
 
 export default function MarqueeProjects() {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const titleRefs = useRef<HTMLSpanElement[]>([]);
 
-  // MARQUEE SCROLL
+  const rafRef = useRef<number>(0);
+  const lastRef = useRef<number>(0);
+  const xRef = useRef<number>(0);
+
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  // MARQUEE SCROLL (paused when activeIndex != null)
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    let raf = 0;
     let last = performance.now();
-    let x = 0;
+    lastRef.current = last;
+
     const speed = 30;
 
     const tick = (now: number) => {
+      if (activeIndex !== null) return; // pause
+
       const dt = (now - last) / 1000;
       last = now;
+      lastRef.current = now;
 
-      x -= speed * dt;
+      xRef.current -= speed * dt;
 
       const w = track.scrollWidth / 2;
-      if (w > 0 && x <= -w) x += w;
+      if (w > 0 && xRef.current <= -w) xRef.current += w;
 
-      track.style.transform = `translate3d(${x}px,0,0)`;
-      raf = requestAnimationFrame(tick);
+      track.style.transform = `translate3d(${xRef.current}px,0,0)`;
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+    rafRef.current = requestAnimationFrame(tick);
 
-  // TITLE WIDTH MEASURE
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [activeIndex]);
+
+  // TITLE WIDTH MEASURE (your logic)
   useEffect(() => {
     titleRefs.current.forEach((el) => {
       if (!el) return;
@@ -44,6 +54,7 @@ export default function MarqueeProjects() {
     });
   }, []);
 
+  // your hover handlers (unchanged)
   const handleEnter = (index: number) => {
     const el = titleRefs.current[index];
     if (!el) return;
@@ -59,6 +70,52 @@ export default function MarqueeProjects() {
     el.style.width = "0px";
   };
 
+  const openProject = (i: number) => setActiveIndex(i);
+  const closeProject = () => setActiveIndex(null);
+
+  // DETAIL VIEW (simple replacement UI)
+  if (activeIndex !== null) {
+    const p = projects[activeIndex];
+
+    return (
+      <section className="marqueeSection">
+        <div className="marqueeDetail">
+          <button className="marqueeClose" type="button" onClick={closeProject}>
+            X Close
+          </button>
+
+          <div className="marqueeDetailInner">
+            <div className="marqueeDetailMedia">
+              <img className="marqueeDetailImg" src={p.thumb} alt={p.title} />
+            </div>
+
+            <div className="marqueeDetailPanel">
+              <table className="marqueeDetailTable">
+                <tbody>
+                  <tr>
+                    <th>Project</th>
+                    <td>{p.title}</td>
+                  </tr>
+                  <tr>
+                    <th>Link</th>
+                    <td>
+                      <a href={p.href}>{p.href}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Description</th>
+                    <td>Write your descriptive text here.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // MARQUEE VIEW (your structure, with a button wrapper)
   return (
     <section className="marqueeSection">
       <div className="marqueeViewport">
@@ -74,19 +131,27 @@ export default function MarqueeProjects() {
                   onMouseEnter={() => handleEnter(i)}
                   onMouseLeave={() => handleLeave(i)}
                 >
-                  <span className="marqueeLabel">
-                    <span className="marqueeLabelNum">({label})</span>
-                    <span
-                      className="marqueeLabelTitle"
-                      ref={(el) => {
-                        if (el) titleRefs.current[i] = el;
-                      }}
-                    >
-                      ({p.title})
+                  <button
+                    type="button"
+                    className="marqueeButton"
+                    onClick={() => openProject(i)}
+                    aria-label={`Open ${p.title}`}
+                  >
+                    {/* title logic + markup unchanged */}
+                    <span className="marqueeLabel">
+                      <span className="marqueeLabelNum">({label})</span>
+                      <span
+                        className="marqueeLabelTitle"
+                        ref={(el) => {
+                          if (el) titleRefs.current[i] = el;
+                        }}
+                      >
+                        ({p.title})
+                      </span>
                     </span>
-                  </span>
 
-                  <img className="marqueeImg" src={p.thumb} alt={p.title} />
+                    <img className="marqueeImg" src={p.thumb} alt={p.title} />
+                  </button>
                 </li>
               );
             })}
@@ -105,19 +170,27 @@ export default function MarqueeProjects() {
                   onMouseEnter={() => handleEnter(idx)}
                   onMouseLeave={() => handleLeave(idx)}
                 >
-                  <span className="marqueeLabel">
-                    <span className="marqueeLabelNum">({label})</span>
-                    <span
-                      className="marqueeLabelTitle"
-                      ref={(el) => {
-                        if (el) titleRefs.current[idx] = el;
-                      }}
-                    >
-                      ({p.title})
+                  <button
+                    type="button"
+                    className="marqueeButton"
+                    onClick={() => openProject(i)}
+                    aria-label={`Open ${p.title}`}
+                  >
+                    {/* title logic + markup unchanged */}
+                    <span className="marqueeLabel">
+                      <span className="marqueeLabelNum">({label})</span>
+                      <span
+                        className="marqueeLabelTitle"
+                        ref={(el) => {
+                          if (el) titleRefs.current[idx] = el;
+                        }}
+                      >
+                        ({p.title})
+                      </span>
                     </span>
-                  </span>
 
-                  <img className="marqueeImg" src={p.thumb} alt={p.title} />
+                    <img className="marqueeImg" src={p.thumb} alt={p.title} />
+                  </button>
                 </li>
               );
             })}
