@@ -14,9 +14,16 @@
 /* Intro paragraph */
 .intro {
   font-size: clamp(20px, 1.6vw, 28px);
+  color: rgb(249, 249, 247);
   line-height: 1.22;
   letter-spacing: -0.015em;
   max-width: 54ch;
+    margin: 0 auto; 
+}
+
+.header {
+  font-size: 64px;
+  color: rgb(249, 249, 247);
 }
 
 /* Project list */

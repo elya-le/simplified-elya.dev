@@ -6,7 +6,7 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  border: solid 1px red;
+  border: 1px solid rgb(238, 238, 223);
   z-index: 50;
   background: white;
 }

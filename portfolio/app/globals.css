@@ -72,7 +72,8 @@ a {
 }
 
 .section {
-  border: 1px solid red;
+  text-align: center; 
+  border: 1px solid rgb(238, 238, 223);
   margin: 0;
   padding: 0;
 }

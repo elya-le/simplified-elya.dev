@@ -44,17 +44,26 @@ export default function MarqueeProjects() {
     return () => cancelAnimationFrame(rafRef.current);
   }, [activeIndex]);
 
-  // TITLE WIDTH MEASURE (your logic)
+  // TITLE WIDTH MEASURE LOGIC
   useEffect(() => {
-    titleRefs.current.forEach((el) => {
-      if (!el) return;
-      const width = el.scrollWidth;
-      el.dataset.width = width.toString();
-      el.style.width = "0px";
-    });
-  }, []);
+  // Only measure when the marquee view is visible
+  if (activeIndex !== null) return;
 
-  // your hover handlers (unchanged)
+  titleRefs.current.forEach((el) => {
+    if (!el) return;
+
+    // Measure the full natural width of the title text
+    const width = el.scrollWidth;
+
+    // Store it so hover handlers can use it later
+    el.dataset.width = width.toString();
+
+    // Start collapsed so it "reveals" on hover
+    el.style.width = "0px";
+  });
+}, [activeIndex]);
+
+  // hover handlers (unchanged)
   const handleEnter = (index: number) => {
     const el = titleRefs.current[index];
     if (!el) return;

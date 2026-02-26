@@ -2,7 +2,7 @@ export default function Intro() {
   return (
     <section className="section">
       <h1 className="header">
-        ////
+        H/,/'/ ////'
       </h1>
       <p className="intro">
         Full-Stack Developer with a background in
